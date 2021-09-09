@@ -1,4 +1,5 @@
 import java.io.File
+import java.io.FileNotFoundException
 
 fun projectCreator() {
     val home :String = System.getProperty("user.home")
@@ -10,16 +11,35 @@ fun projectCreator() {
 
     with(File(home+"/"+name+".rmn")) {
         this.createNewFile()
-        this.writeText("Transazione,")
+        this.appendText("Transazione,")
         partecipants?.forEach {
             when {
-                partecipants.indexOf(it) != partecipants.size -> this.writeText(it+"(Pagato|Speso),")
-                else -> this.writeText(it+"(Pagato|Speso)\n")
+                (partecipants.indexOf(it)!=partecipants.size) -> this.appendText(it + "(Pagato|Speso),")
+                else -> this.appendText(it + "(Pagato|Speso)\n")
             }
-            this.writeText("\n")
         }
+        this.appendText("\n")
         println(">] Progetto creato!")
 
     }
+
+}
+
+fun projectFinder() {
+    println(">] Ecco i progetti che ho trovato: ")
+    File(System.getProperty("user.home")).walk().forEach {
+        if (it.name.endsWith(".rmn")) println(it.name)
+    }
+
+}
+
+fun projectLookUp (projectName:String) {
+
+    try {
+        with(File(System.getProperty("user.hom")+"/"+projectName+".rmn")) {
+            println(this.readLines())
+        }
+    } catch (exception:FileNotFoundException) {
+        println(">] Non ci sono progetti con quel nome!")}
 
 }

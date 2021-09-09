@@ -41,6 +41,8 @@ fun main()  {
             ans == "help" -> println(helpMessage)
             ans == "egg" -> println(egg)
             ans == "new" -> projectCreator()
+            ans == "see" -> projectFinder()
+            (ans!!.contains("see")) -> projectLookUp(ans.substring(4))
             ans == "quit" -> exitProcess(1)
         }
 
